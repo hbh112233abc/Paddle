@@ -399,6 +399,12 @@ def set_paddle_lib_path():
         if hasattr(site, 'getsitepackages')
         else [x for x in sys.path if 'site-packages' in x]
     )
+    
+    if hasattr(sys,'frozen'):
+        _internal_dir = os.path.sep.join([os.path.dirname(os.path.abspath(sys.argv[0])),'_internal'])
+        if os.path.exists(_internal_dir):
+            site_dirs.append(_internal_dir)
+            
     for site_dir in site_dirs:
         lib_dir = os.path.sep.join([site_dir, 'paddle', 'libs'])
         if os.path.exists(lib_dir):
